@@ -21,4 +21,4 @@ jobs:
           password: ${{ secrets.SERVER_PASS }}
           port: 22
           source: "."
-          target: "/"
+          target: "."
