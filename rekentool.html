@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCO Rekentool voor Bonenmachines - Leodoro Koffie</title>
+    <!-- Tailwind CSS voor styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Font 'Dosis' -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Stijlen met CSS variabelen voor light & dark mode */
+        :root {
+            --bg-color: #f0f4f8;
+            --card-bg-color: #ffffff;
+            --text-color: #4a5568;
+            --title-color: #05202e;
+            --sub-title-color: #4a5568;
+            --border-color: #bdcde3;
+            --input-bg: #ffffff;
+            --input-border: #cbd5e0;
+            --input-text: #000000;
+            --primary-color: #3d7599;
+            --primary-text: #ffffff;
+            --result-box-bg: #eaf0f9;
+        }
+
+        .dark {
+            --bg-color: #0d1117;
+            --card-bg-color: #161b22;
+            --text-color: #c9d1d9;
+            --title-color: #f0f6fc;
+            --sub-title-color: #8b949e;
+            --border-color: #30363d;
+            --input-bg: #0d1117;
+            --input-border: #30363d;
+            --input-text: #c9d1d9;
+            --primary-color: #58a6ff;
+            --primary-text: #0d1117;
+            --result-box-bg: #1c2128;
+        }
+
+        body {
+            font-family: 'Dosis', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .card {
+            background-color: var(--card-bg-color);
+            transition: background-color 0.3s;
+        }
+        h1, h2 {
+            color: var(--title-color);
+        }
+        p, label, .tooltip-text {
+            color: var(--sub-title-color);
+        }
+        .input-group {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .input-group label {
+            flex: 1 1 60%;
+            padding-right: 1rem;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        .input-group .input-wrapper {
+            flex: 1 1 40%;
+            position: relative;
+        }
+        .input-group input[type="number"] {
+            width: 100%;
+            padding-left: 1.25rem;
+            padding-right: 2.5rem;
+            border: 1px solid var(--input-border);
+            background-color: var(--input-bg);
+            color: var(--input-text);
+            border-radius: 0.375rem;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+            height: 2.25rem;
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .input-group .unit, .input-group .symbol {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--sub-title-color);
+            pointer-events: none;
+            font-size: 0.875rem;
+        }
+        .input-group .unit { right: 0.75rem; }
+        .input-group .symbol { left: 0.5rem; }
+        
+        .input-group .tooltip-text {
+             flex-basis: 100%;
+             padding-left: 60%;
+             padding-right: 1rem;
+             font-size: 0.85rem;
+             margin-top: 0.125rem;
+        }
+        .result-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 1rem;
+        }
+        .result-line > span:first-child {
+             color: var(--text-color);
+        }
+        .result-line > .result-value {
+            font-weight: 600;
+            color: var(--title-color);
+            text-align: right;
+            min-width: 100px;
+            font-family: 'Inter', sans-serif;
+        }
+        .result-line.total {
+            font-weight: 700;
+            color: var(--title-color);
+            border-top: 2px solid var(--title-color);
+            margin-top: 0.5rem;
+            padding-top: 0.75rem;
+        }
+        .radio-label span {
+            border: 1px solid var(--input-border);
+        }
+        .radio-label input:checked + span {
+            background-color: var(--primary-color);
+            color: var(--primary-text);
+            border-color: var(--primary-color);
+        }
+        .result-box {
+            background-color: var(--result-box-bg);
+            border: 1px solid var(--border-color);
+        }
+        .result-box p:first-child {
+            color: var(--title-color);
+        }
+        .result-box .price-value {
+            color: var(--primary-color);
+        }
+        /* Logo visibility for dark/light mode */
+        .logo-dark { display: none; }
+        .dark .logo-dark { display: block; }
+        .dark .logo-light { display: none; }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 max-w-6xl">
+        <header class="flex flex-col md:flex-row items-center justify-between mb-8 gap-4">
+            <!-- Left: Logo -->
+            <div class="w-full md:w-1/4 flex justify-center md:justify-start">
+                <img src="leodoro-logo.png" alt="Bedrijfslogo" class="logo-light h-16 w-auto">
+                <img src="logo-wit.png" alt="Bedrijfslogo Dark Mode" class="logo-dark h-16 w-auto">
+            </div>
+
+            <!-- Center: Title -->
+            <div class="w-full md:w-1/2 text-center">
+                <h1 class="text-3xl font-semibold" data-translate="main_title">TCO (Total Cost of Ownership) Rekentool</h1>
+                <p class="mt-2 text-base" data-translate="sub_title">Bereken de totale kosten voor professionele bonenmachines.</p>
+            </div>
+
+            <!-- Right: Buttons -->
+            <div class="w-full md:w-1/4 flex justify-center md:justify-end">
+                <div class="flex items-center space-x-2">
+                    <button id="lang-toggle" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 font-sans font-bold">
+                        EN
+                    </button>
+                    <button id="theme-toggle" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
+                        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 5.05A1 1 0 003.636 6.464l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 0zM3 11a1 1 0 100-2H2a1 1 0 100 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="space-y-6">
+            <!-- Blok voor Parameters -->
+            <div class="card p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-semibold mb-5 border-b pb-3" style="border-color: var(--border-color);" data-translate="parameters_title">Parameters</h2>
+                
+                <div class="mb-6">
+                    <label class="block font-medium mb-3 text-lg" data-translate="financing_form">Financieringsvorm</label>
+                    <div class="flex gap-2 sm:gap-4 max-w-md">
+                        <label for="koop" class="flex-1 radio-label cursor-pointer"><input type="radio" id="koop" name="financiering" value="koop" class="sr-only" checked><span class="block text-center py-2 px-3 rounded-md transition duration-200" data-translate="buy">Koop</span></label>
+                        <label for="lease" class="flex-1 radio-label cursor-pointer"><input type="radio" id="lease" name="financiering" value="lease" class="sr-only"><span class="block text-center py-2 px-3 rounded-md transition duration-200" data-translate="lease">Lease</span></label>
+                        <label for="huur" class="flex-1 radio-label cursor-pointer"><input type="radio" id="huur" name="financiering" value="huur" class="sr-only"><span class="block text-center py-2 px-3 rounded-md transition duration-200" data-translate="rent">Huur</span></label>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16">
+                    <div class="space-y-3">
+                        <div class="input-group"><label for="kopjesPerDag" data-translate="cups_per_day">Kopjes per dag</label><div class="input-wrapper"><input type="number" id="kopjesPerDag" value="50" class="form-input"><span class="unit" data-translate="unit_cups">kopjes</span></div></div>
+                        <div class="input-group"><label for="werkdagenPerJaar" data-translate="workdays_per_year">Werkdagen per jaar</label><div class="input-wrapper"><input type="number" id="werkdagenPerJaar" value="252" class="form-input"><span class="unit" data-translate="unit_days">dagen</span></div></div>
+                        
+                        <div class="space-y-3">
+                            <div id="koop-velden" class="space-y-3">
+                                <div class="input-group"><label for="investeringskost" data-translate="investment_cost">Investeringskost machine</label><div class="input-wrapper"><span class="symbol">€</span><input type="number" id="investeringskost" value="2500" class="form-input"></div></div>
+                                <div class="input-group"><label for="levensduur" data-translate="lifespan">Levensduur machine</label><div class="input-wrapper"><input type="number" id="levensduur" value="5" class="form-input"><span class="unit" data-translate="unit_years">jaren</span></div><div class="tooltip-text" data-translate="tooltip_lifespan">Gebruikelijk is 5 jaar.</div></div>
+                                <div class="input-group"><label for="restwaarde" data-translate="residual_value">Restwaarde</label><div class="input-wrapper"><span class="symbol">€</span><input type="number" id="restwaarde" value="500" class="form-input"></div><div class="tooltip-text" data-translate="tooltip_residual">Gebruikelijk is 20% van de investering.</div></div>
+                            </div>
+                            <div id="lease-velden" class="hidden">
+                                <div class="input-group"><label for="leasePerMaand" data-translate="lease_per_month">Lease per maand</label><div class="input-wrapper"><span class="symbol">€</span><input type="number" id="leasePerMaand" value="60" class="form-input"></div></div>
+                            </div>
+                            <div id="huur-velden" class="hidden">
+                                <div class="input-group"><label for="huurPerMaand" data-translate="rent_per_month">Huur per maand</label><div class="input-wrapper"><span class="symbol">€</span><input type="number" id="huurPerMaand" value="75" class="form-input"></div></div>
+                            </div>
+                        </div>
+
+                        <div class="input-group"><label for="prijsKoffiebonen" data-translate="bean_price">Prijs koffiebonen per kg</label><div class="input-wrapper"><span class="symbol">€</span><input type="number" id="prijsKoffiebonen" value="15" class="form-input"></div></div>
+                        <div class="input-group"><label for="koffiedosering" data-translate="dosage_per_cup">Koffiedosering per kopje</label><div class="input-wrapper"><input type="number" id="koffiedosering" value="0.008" step="0.001" class="form-input"><span class="unit">kg</span></div></div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="input-group"><label for="melkprijs" data-translate="milk_price">Melkprijs per liter</label><div class="input-wrapper"><span class="symbol">€</span><input type="number" id="melkprijs" value="1.20" step="0.01" class="form-input"></div></div>
+                        <div class="input-group"><label for="melkvolume" data-translate="milk_volume">Melkvolume per melkdrank</label><div class="input-wrapper"><input type="number" id="melkvolume" value="0.1" step="0.01" class="form-input"><span class="unit">L</span></div></div>
+                        <div class="input-group"><label for="aandeelMelkdranken" data-translate="milk_drink_share">Aandeel melkdranken</label><div class="input-wrapper"><input type="number" id="aandeelMelkdranken" value="0.3" step="0.01" max="1" class="form-input"><span class="unit">%</span></div></div>
+                        <div class="input-group"><label for="filterkost" data-translate="filter_cost">Filterkost per vervanging</label><div class="input-wrapper"><span class="symbol">€</span><input type="number" id="filterkost" value="40" class="form-input"></div></div>
+                        <div class="input-group"><label for="filtervervangingen" data-translate="filter_replacements">Filtervervangingen per jaar</label><div class="input-wrapper"><input type="number" id="filtervervangingen" value="2" class="form-input"><span class="unit">x</span></div></div>
+                        <div class="input-group"><label for="reinigingskosten" data-translate="cleaning_cost">Reinigingskosten per maand</label><div class="input-wrapper"><span class="symbol">€</span><input type="number" id="reinigingskosten" value="10" class="form-input"></div></div>
+                        <div class="input-group"><label for="energiekost" data-translate="energy_cost">Elektriciteitskost per kWh</label><div class="input-wrapper"><span class="symbol">€</span><input type="number" id="energiekost" value="0.35" step="0.01" class="form-input"></div></div>
+                        <div class="input-group"><label for="energieverbruik" data-translate="energy_usage">Energieverbruik machine per jaar</label><div class="input-wrapper"><input type="number" id="energieverbruik" value="800" class="form-input"><span class="unit">kWh</span></div></div>
+                        <div class="input-group"><label for="onderhoudscontract" data-translate="maintenance_contract">Onderhoudscontract per jaar</label><div class="input-wrapper"><span class="symbol">€</span><input type="number" id="onderhoudscontract" value="0" class="form-input"></div><div class="tooltip-text" data-translate="tooltip_maintenance">Gratis bij afname Leodoro producten.</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blok voor Kengetallen (Resultaten) -->
+            <div class="card p-6 rounded-lg shadow-lg">
+                <h2 class="text-2xl font-semibold mb-4 border-b pb-3" style="border-color: var(--border-color);" data-translate="results_title">Kengetallen</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-x-8 items-start">
+                    <div class="md:col-span-2">
+                        <div class="result-line"><span data-translate="res_cups_year">Kopjes per jaar</span><span id="res-kopjesPerJaar" class="result-value">0</span></div>
+                        <div class="result-line"><span data-translate="res_bean_cost">Jaarlijkse kosten koffiebonen</span><span class="result-value">€ <span id="res-kostenKoffiebonen">0,00</span></span></div>
+                        <div class="result-line"><span data-translate="res_milk_cost">Jaarlijkse kosten melk</span><span class="result-value">€ <span id="res-kostenMelk">0,00</span></span></div>
+                        <div class="result-line"><span data-translate="res_filter_cost">Jaarlijkse kosten filters</span><span class="result-value">€ <span id="res-kostenFilters">0,00</span></span></div>
+                        <div class="result-line"><span data-translate="res_cleaning_cost">Jaarlijkse kosten reiniging</span><span class="result-value">€ <span id="res-kostenReiniging">0,00</span></span></div>
+                        <div class="result-line"><span data-translate="res_energy_cost">Jaarlijkse energiekosten</span><span class="result-value">€ <span id="res-kostenEnergie">0,00</span></span></div>
+                        <div id="res-afschrijving-line" class="result-line"><span data-translate="res_depreciation">Jaarlijkse afschrijving CapEx</span><span class="result-value">€ <span id="res-kostenAfschrijving">0,00</span></span></div>
+                        <div id="res-lease-line" class="result-line hidden"><span data-translate="res_lease_cost">Jaarlijkse leasekosten</span><span class="result-value">€ <span id="res-kostenLease">0,00</span></span></div>
+                        <div id="res-huur-line" class="result-line hidden"><span data-translate="res_rent_cost">Jaarlijkse huurkosten</span><span class="result-value">€ <span id="res-kostenHuur">0,00</span></span></div>
+                        <div class="result-line"><span data-translate="res_maintenance_cost">Jaarlijks onderhoud</span><span class="result-value">€ <span id="res-kostenOnderhoud">0,00</span></span></div>
+                        <div class="result-line total mt-4"><span data-translate="res_total_cost">Totale jaarlijkse kosten</span><span class="result-value">€ <span id="res-totaleKosten">0,00</span></span></div>
+                    </div>
+                    <div class="md:col-span-1 flex items-center justify-center h-full mt-4 md:mt-0">
+                         <div class="result-box w-full text-center p-6 rounded-lg">
+                            <p class="text-xl" data-translate="cost_per_cup">Kosten per kopje</p>
+                            <p class="price-value text-5xl font-bold"><span class="result-value">€ <span id="res-kostenPerKopje">0,00</span></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- TRANSLATION LOGIC ---
+            const translations = {
+                nl: {
+                    main_title: "TCO (Total Cost of Ownership) Rekentool",
+                    sub_title: "Bereken de totale kosten voor professionele bonenmachines.",
+                    parameters_title: "Parameters",
+                    financing_form: "Financieringsvorm",
+                    buy: "Koop",
+                    lease: "Lease",
+                    rent: "Huur",
+                    cups_per_day: "Kopjes per dag",
+                    unit_cups: "kopjes",
+                    workdays_per_year: "Werkdagen per jaar",
+                    unit_days: "dagen",
+                    investment_cost: "Investeringskost machine",
+                    lifespan: "Levensduur machine",
+                    unit_years: "jaren",
+                    tooltip_lifespan: "Gebruikelijk is 5 jaar.",
+                    residual_value: "Restwaarde",
+                    tooltip_residual: "Gebruikelijk is 20% van de investering.",
+                    lease_per_month: "Lease per maand",
+                    rent_per_month: "Huur per maand",
+                    bean_price: "Prijs koffiebonen per kg",
+                    dosage_per_cup: "Koffiedosering per kopje",
+                    milk_price: "Melkprijs per liter",
+                    milk_volume: "Melkvolume per melkdrank",
+                    milk_drink_share: "Aandeel melkdranken",
+                    filter_cost: "Filterkost per vervanging",
+                    filter_replacements: "Filtervervangingen per jaar",
+                    cleaning_cost: "Reinigingskosten per maand",
+                    energy_cost: "Elektriciteitskost per kWh",
+                    energy_usage: "Energieverbruik machine per jaar",
+                    maintenance_contract: "Onderhoudscontract per jaar",
+                    tooltip_maintenance: "Gratis bij afname Leodoro producten.",
+                    results_title: "Kengetallen",
+                    res_cups_year: "Kopjes per jaar",
+                    res_bean_cost: "Jaarlijkse kosten koffiebonen",
+                    res_milk_cost: "Jaarlijkse kosten melk",
+                    res_filter_cost: "Jaarlijkse kosten filters",
+                    res_cleaning_cost: "Jaarlijkse kosten reiniging",
+                    res_energy_cost: "Jaarlijkse energiekosten",
+                    res_depreciation: "Jaarlijkse afschrijving CapEx",
+                    res_lease_cost: "Jaarlijkse leasekosten",
+                    res_rent_cost: "Jaarlijkse huurkosten",
+                    res_maintenance_cost: "Jaarlijks onderhoud",
+                    res_total_cost: "Totale jaarlijkse kosten",
+                    cost_per_cup: "Kosten per kopje",
+                },
+                en: {
+                    main_title: "TCO (Total Cost of Ownership) Calculator",
+                    sub_title: "Calculate the total cost for professional bean-to-cup machines.",
+                    parameters_title: "Parameters",
+                    financing_form: "Financing Method",
+                    buy: "Buy",
+                    lease: "Lease",
+                    rent: "Rent",
+                    cups_per_day: "Cups per day",
+                    unit_cups: "cups",
+                    workdays_per_year: "Workdays per year",
+                    unit_days: "days",
+                    investment_cost: "Machine investment cost",
+                    lifespan: "Machine lifespan",
+                    unit_years: "years",
+                    tooltip_lifespan: "Typically 5 years.",
+                    residual_value: "Residual value",
+                    tooltip_residual: "Typically 20% of investment.",
+                    lease_per_month: "Lease per month",
+                    rent_per_month: "Rent per month",
+                    bean_price: "Coffee bean price per kg",
+                    dosage_per_cup: "Dosage per cup",
+                    milk_price: "Milk price per liter",
+                    milk_volume: "Milk volume per milk drink",
+                    milk_drink_share: "Share of milk drinks",
+                    filter_cost: "Filter cost per replacement",
+                    filter_replacements: "Filter replacements per year",
+                    cleaning_cost: "Cleaning cost per month",
+                    energy_cost: "Electricity cost per kWh",
+                    energy_usage: "Machine energy usage per year",
+                    maintenance_contract: "Maintenance contract per year",
+                    tooltip_maintenance: "Free with Leodoro products.",
+                    results_title: "Key Figures",
+                    res_cups_year: "Cups per year",
+                    res_bean_cost: "Annual coffee bean cost",
+                    res_milk_cost: "Annual milk cost",
+                    res_filter_cost: "Annual filter cost",
+                    res_cleaning_cost: "Annual cleaning cost",
+                    res_energy_cost: "Annual energy cost",
+                    res_depreciation: "Annual depreciation CapEx",
+                    res_lease_cost: "Annual lease cost",
+                    res_rent_cost: "Annual rent cost",
+                    res_maintenance_cost: "Annual maintenance",
+                    res_total_cost: "Total annual cost",
+                    cost_per_cup: "Cost per cup",
+                }
+            };
+
+            const langToggleBtn = document.getElementById('lang-toggle');
+            let currentLang = localStorage.getItem('language') || 'nl';
+
+            function translatePage() {
+                document.querySelectorAll('[data-translate]').forEach(el => {
+                    const key = el.getAttribute('data-translate');
+                    el.textContent = translations[currentLang][key] || el.textContent;
+                });
+                langToggleBtn.textContent = currentLang === 'nl' ? 'EN' : 'NL';
+                document.documentElement.lang = currentLang;
+            }
+
+            langToggleBtn.addEventListener('click', () => {
+                currentLang = currentLang === 'nl' ? 'en' : 'nl';
+                localStorage.setItem('language', currentLang);
+                translatePage();
+            });
+
+
+            // --- DARK MODE LOGIC ---
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+            const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+            // Default to light mode, only check localStorage
+            if (localStorage.getItem('color-theme') === 'dark') {
+                document.documentElement.classList.add('dark');
+                themeToggleLightIcon.classList.remove('hidden');
+            } else {
+                themeToggleDarkIcon.classList.remove('hidden');
+            }
+
+            themeToggleBtn.addEventListener('click', function() {
+                themeToggleDarkIcon.classList.toggle('hidden');
+                themeToggleLightIcon.classList.toggle('hidden');
+                const isDark = document.documentElement.classList.toggle('dark');
+                localStorage.setItem('color-theme', isDark ? 'dark' : 'light');
+            });
+
+
+            // --- CALCULATOR LOGIC ---
+            const inputs = document.querySelectorAll('input[type="number"], input[type="radio"]');
+            const koopVelden = document.getElementById('koop-velden');
+            const leaseVelden = document.getElementById('lease-velden');
+            const huurVelden = document.getElementById('huur-velden');
+            const resAfschrijvingLine = document.getElementById('res-afschrijving-line');
+            const resLeaseLine = document.getElementById('res-lease-line');
+            const resHuurLine = document.getElementById('res-huur-line');
+
+            function berekenAlles() {
+                const getVal = (id) => parseFloat(document.getElementById(id).value.replace(',', '.')) || 0;
+                const financieringType = document.querySelector('input[name="financiering"]:checked').value;
+                
+                const kopjesPerDag = getVal('kopjesPerDag');
+                const werkdagenPerJaar = getVal('werkdagenPerJaar');
+                const investeringskost = getVal('investeringskost');
+                const levensduur = getVal('levensduur');
+                const restwaarde = getVal('restwaarde');
+                const leasePerMaand = getVal('leasePerMaand');
+                const huurPerMaand = getVal('huurPerMaand');
+                const prijsKoffiebonen = getVal('prijsKoffiebonen');
+                const koffiedosering = getVal('koffiedosering');
+                const melkprijs = getVal('melkprijs');
+                const melkvolume = getVal('melkvolume');
+                const aandeelMelkdranken = getVal('aandeelMelkdranken');
+                const filterkost = getVal('filterkost');
+                const filtervervangingen = getVal('filtervervangingen');
+                const reinigingskosten = getVal('reinigingskosten');
+                const energiekost = getVal('energiekost');
+                const energieverbruik = getVal('energieverbruik');
+                const onderhoudscontract = getVal('onderhoudscontract');
+
+                const kopjesPerJaar = kopjesPerDag * werkdagenPerJaar;
+                const kostenKoffiebonen = kopjesPerJaar * koffiedosering * prijsKoffiebonen;
+                const kostenMelk = kopjesPerJaar * aandeelMelkdranken * melkvolume * melkprijs;
+                const kostenFilters = filtervervangingen * filterkost;
+                const kostenReiniging = reinigingskosten * 12;
+                const kostenEnergie = energieverbruik * energiekost;
+                const kostenOnderhoud = onderhoudscontract;
+
+                let kostenAfschrijving = 0, kostenLease = 0, kostenHuur = 0, financieringskosten = 0;
+
+                if (financieringType === 'koop') {
+                    kostenAfschrijving = (levensduur > 0) ? (investeringskost - restwaarde) / levensduur : 0;
+                    financieringskosten = kostenAfschrijving;
+                } else if (financieringType === 'lease') {
+                    kostenLease = leasePerMaand * 12;
+                    financieringskosten = kostenLease;
+                } else if (financieringType === 'huur') {
+                    kostenHuur = huurPerMaand * 12;
+                    financieringskosten = kostenHuur;
+                }
+
+                const totaleKosten = kostenKoffiebonen + kostenMelk + kostenFilters + kostenReiniging + kostenEnergie + kostenOnderhoud + financieringskosten;
+                const kostenPerKopje = (kopjesPerJaar > 0) ? totaleKosten / kopjesPerJaar : 0;
+
+                const setRes = (id, value, decimals = 2) => {
+                    const el = document.getElementById(id);
+                    if (el) el.textContent = value.toFixed(decimals).replace('.', ',');
+                };
+                
+                const setIntRes = (id, value) => {
+                     const el = document.getElementById(id);
+                     if (el) el.textContent = value.toLocaleString('nl-NL');
+                }
+
+                setIntRes('res-kopjesPerJaar', kopjesPerJaar);
+                setRes('res-kostenKoffiebonen', kostenKoffiebonen);
+                setRes('res-kostenMelk', kostenMelk);
+                setRes('res-kostenFilters', kostenFilters);
+                setRes('res-kostenReiniging', kostenReiniging);
+                setRes('res-kostenEnergie', energieverbruik * energiekost);
+                setRes('res-kostenAfschrijving', kostenAfschrijving);
+                setRes('res-kostenLease', kostenLease);
+                setRes('res-kostenHuur', kostenHuur);
+                setRes('res-kostenOnderhoud', kostenOnderhoud);
+                setRes('res-totaleKosten', totaleKosten);
+                setRes('res-kostenPerKopje', kostenPerKopje, 2);
+            }
+            
+            function toggleFinancieringVelden() {
+                const type = document.querySelector('input[name="financiering"]:checked').value;
+                koopVelden.classList.toggle('hidden', type !== 'koop');
+                resAfschrijvingLine.classList.toggle('hidden', type !== 'koop');
+                leaseVelden.classList.toggle('hidden', type !== 'lease');
+                resLeaseLine.classList.toggle('hidden', type !== 'lease');
+                huurVelden.classList.toggle('hidden', type !== 'huur');
+                resHuurLine.classList.toggle('hidden', type !== 'huur');
+                berekenAlles();
+            }
+
+            inputs.forEach(input => input.addEventListener('input', toggleFinancieringVelden));
+            
+            // Initial calls on page load
+            toggleFinancieringVelden();
+            translatePage();
+        });
+    </script>
+</body>
+</html>

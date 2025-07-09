@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<!-- De 'dark' class wordt hier door het script toegevoegd/verwijderd -->
+<html lang="nl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cas van Hövell | Web Development & SEO Specialist</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Configuratie gebaseerd op PRD -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        heading: ['Clash Display', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        // Licht Thema
+                        'background-light': '#F9FAFB',
+                        'foreground-light': '#FFFFFF',
+                        'text-primary-light': '#111827',
+                        'text-secondary-light': '#6B7280',
+                        'accent-light': '#4F46E5',
+                        'accent-hover-light': '#4338CA',
+                        'border-light': '#E5E7EB',
+                        // Donker Thema
+                        'background-dark': '#111827',
+                        'foreground-dark': '#1F2937',
+                        'text-primary-dark': '#F9FAFB',
+                        'text-secondary-dark': '#9CA3AF',
+                        'accent-dark': '#6366F1',
+                        'accent-hover-dark': '#4F46E5',
+                        'border-dark': '#374151',
+                    },
+                    animation: {
+                        blob: "blob 7s infinite",
+                    },
+                    keyframes: {
+                        blob: {
+                            "0%": { transform: "translate(0px, 0px) scale(1)" },
+                            "33%": { transform: "translate(30px, -50px) scale(1.1)" },
+                            "66%": { transform: "translate(-20px, 20px) scale(0.9)" },
+                            "100%": { transform: "translate(0px, 0px) scale(1)" },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Lettertypes uit PRD -->
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://rsms.me/">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+
+    <!-- AOS (Animate On Scroll) Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        /* Basis stijlen */
+        body {
+            font-family: 'Inter', 'sans-serif';
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+        
+        /* Vloeiende animaties voor interactieve elementen */
+        .transition-all {
+            transition: all 0.3s ease-in-out;
+        }
+        
+        /* Stijl voor de projectkaarten hover-effect */
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+        .project-card:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Achtergrondpatroon voor Werkwijze sectie */
+        .process-section-bg {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d1d5db' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .dark .process-section-bg {
+             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234a5568' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-secondary-light dark:text-text-secondary-dark antialiased">
+
+    <!-- Navigatiebalk -->
+    <header class="bg-foreground-light dark:bg-foreground-dark text-text-primary-light dark:text-text-primary-dark sticky top-0 z-50 shadow-lg">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-heading font-semibold" data-lang="nav_brand">HWW Freelance</a>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="#diensten" class="hover:text-accent-light dark:hover:text-accent-dark transition-colors" data-lang="nav_services">Diensten</a>
+                <a href="#portfolio" class="hover:text-accent-light dark:hover:text-accent-dark transition-colors" data-lang="nav_portfolio">Portfolio</a>
+                <a href="#werkwijze" class="hover:text-accent-light dark:hover:text-accent-dark transition-colors" data-lang="nav_process">Werkwijze</a>
+                <a href="#contact" class="bg-accent-light hover:bg-accent-hover-light dark:bg-accent-dark dark:hover:bg-accent-hover-dark text-white font-bold py-3 px-6 rounded-lg transition-all" data-lang="nav_contact">Contact</a>
+                <!-- Toggles -->
+                <div class="flex items-center space-x-2 border-l border-border-light dark:border-border-dark pl-6">
+                    <button id="lang-toggle" class="h-10 w-10 flex items-center justify-center font-semibold text-sm border border-border-light dark:border-border-dark rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-light dark:focus:ring-offset-gray-800 transition-colors">EN</button>
+                    <button id="theme-toggle" type="button" class="h-10 w-10 flex items-center justify-center text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-light dark:focus:ring-offset-gray-800 rounded-lg text-sm">
+                        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 5.05A1 1 0 003.636 6.464l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 0zM3 11a1 1 0 100-2H2a1 1 0 100 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                    </button>
+                </div>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden">
+                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <!-- Mobiel menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-950 px-6 pb-4">
+            <a href="#diensten" class="block py-2 hover:text-accent-light dark:hover:text-accent-dark transition-colors" data-lang="nav_services_mobile">Diensten</a>
+            <a href="#portfolio" class="block py-2 hover:text-accent-light dark:hover:text-accent-dark transition-colors" data-lang="nav_portfolio_mobile">Portfolio</a>
+            <a href="#werkwijze" class="block py-2 hover:text-accent-light dark:hover:text-accent-dark transition-colors" data-lang="nav_process_mobile">Werkwijze</a>
+            <a href="#contact" class="block mt-2 bg-accent-light hover:bg-accent-hover-light dark:bg-accent-dark dark:hover:bg-accent-hover-dark text-white font-bold py-3 px-6 rounded-lg transition-all text-center" data-lang="nav_contact_mobile">Contact</a>
+             <div class="flex items-center space-x-4 mt-4 pt-4 border-t border-border-light dark:border-border-dark justify-center">
+                <span data-lang="language_mobile">Taal:</span>
+                <button id="lang-toggle-mobile" class="font-semibold text-sm border-2 border-gray-400 dark:border-gray-500 rounded-md px-2 py-1 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">EN</button>
+                <span data-lang="theme_mobile">Thema:</span>
+                <button id="theme-toggle-mobile" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
+                    <svg id="theme-toggle-dark-icon-mobile" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                    <svg id="theme-toggle-light-icon-mobile" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 5.05A1 1 0 003.636 6.464l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 0zM3 11a1 1 0 100-2H2a1 1 0 100 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Sectie 1: Hero -->
+        <section id="hero" class="relative overflow-hidden bg-background-light dark:bg-background-dark">
+            <div class="container mx-auto px-6 py-20 md:py-32">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div class="text-center md:text-left z-10" data-aos="fade-right">
+                        <h1 class="font-heading text-5xl md:text-[56px] font-semibold leading-tight mb-4 text-text-primary-light dark:text-text-primary-dark" data-lang="hero_title">Websites die Werken.<br>Resultaat dat Telt.</h1>
+                        <p class="text-lg md:text-xl max-w-xl mx-auto md:mx-0 mb-8" data-lang="hero_subtitle">
+                            Ik help ondernemers groeien met professionele WordPress & Shopify websites, geoptimaliseerd voor maximale vindbaarheid en conversie.
+                        </p>
+                        <div class="space-x-4">
+                            <a href="#portfolio" class="bg-accent-light hover:bg-accent-hover-light dark:bg-accent-dark dark:hover:bg-accent-hover-dark text-white font-bold py-3 px-6 rounded-lg transition-all text-lg" data-lang="hero_button">
+                                Bekijk mijn werk
+                            </a>
+                        </div>
+                    </div>
+                    <div class="relative h-64 md:h-full" data-aos="fade-left">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-64 h-64 bg-accent-light/20 dark:bg-accent-dark/20 rounded-full animate-blob"></div>
+                            <div class="w-72 h-72 bg-purple-500/20 rounded-full animate-blob [animation-delay:-4s]"></div>
+                             <div class="w-56 h-56 bg-teal-500/20 rounded-full animate-blob [animation-delay:-2s]"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sectie 2: Over Mij -->
+        <section id="over" class="py-20 md:py-28">
+            <div class="container mx-auto px-6">
+                <div class="flex flex-col md:flex-row items-center gap-12" data-aos="fade-up">
+                    <div class="md:w-1/3">
+                        <img src="foto-cas.jpg" alt="Professionele foto van Cas van Hövell" class="rounded-full shadow-2xl mx-auto w-64 h-64 object-cover">
+                    </div>
+                    <div class="md:w-2/3">
+                        <h2 class="font-heading text-4xl font-semibold text-text-primary-light dark:text-text-primary-dark mb-4" data-lang="about_title">Jouw partner in digitale groei.</h2>
+                        <p class="text-lg leading-relaxed" data-lang="about_text">
+                            Hoi, ik ben Cas van Hövell. Met een passie voor zowel strakke code als slimme marketing, bouw ik meer dan alleen websites; ik bouw een fundament voor jouw online succes. Mijn aanpak is praktisch en resultaatgericht. Ik geloof niet in onnodig complexe oplossingen, maar in wat écht werkt voor jouw bedrijf. Met een basis in development en een scherp oog voor SEO, zorg ik ervoor dat je niet alleen online aanwezig bent, maar ook gevonden wordt.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sectie 3: Diensten -->
+        <section id="diensten" class="bg-foreground-light dark:bg-foreground-dark py-20 md:py-28">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <h2 class="font-heading text-4xl font-semibold text-text-primary-light dark:text-text-primary-dark" data-lang="services_title">Mijn Expertise</h2>
+                    <p class="text-lg mt-2" data-lang="services_subtitle">Diensten om jouw online aanwezigheid te versterken.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Dienst 1 -->
+                    <div class="bg-background-light dark:bg-background-dark p-8 rounded-xl border border-border-light dark:border-border-dark text-center transform hover:-translate-y-2 transition-transform" data-aos="fade-up" data-aos-delay="100">
+                        <div class="inline-block bg-accent-light dark:bg-accent-dark text-white p-4 rounded-full mb-4">
+                             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h3 class="font-heading text-2xl font-medium mb-2 text-text-primary-light dark:text-text-primary-dark" data-lang="service1_title">Web Development</h3>
+                        <p data-lang="service1_desc">Professionele, snelle en gebruiksvriendelijke websites en webshops in WordPress en Shopify. Volledig op maat en klaar voor de toekomst.</p>
+                    </div>
+                    <!-- Dienst 2 -->
+                    <div class="bg-background-light dark:bg-background-dark p-8 rounded-xl border border-border-light dark:border-border-dark text-center transform hover:-translate-y-2 transition-transform" data-aos="fade-up" data-aos-delay="200">
+                        <div class="inline-block bg-accent-light dark:bg-accent-dark text-white p-4 rounded-full mb-4">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                        </div>
+                        <h3 class="font-heading text-2xl font-medium mb-2 text-text-primary-light dark:text-text-primary-dark" data-lang="service2_title">SEO Optimalisatie</h3>
+                        <p data-lang="service2_desc">Van technisch fundament tot content strategie. Ik zorg ervoor dat jouw doelgroep je website daadwerkelijk kan vinden via Google.</p>
+                    </div>
+                    <!-- Dienst 3 -->
+                    <div class="bg-background-light dark:bg-background-dark p-8 rounded-xl border border-border-light dark:border-border-dark text-center transform hover:-translate-y-2 transition-transform" data-aos="fade-up" data-aos-delay="300">
+                        <div class="inline-block bg-accent-light dark:bg-accent-dark text-white p-4 rounded-full mb-4">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.096 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        </div>
+                        <h3 class="font-heading text-2xl font-medium mb-2 text-text-primary-light dark:text-text-primary-dark" data-lang="service3_title">Tools & Maatwerk</h3>
+                        <p data-lang="service3_desc">Behoefte aan een specifieke tool of koppeling? Ik denk mee en bouw praktische oplossingen die jouw werk makkelijker maken.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sectie 4: Portfolio -->
+        <section id="portfolio" class="py-20 md:py-28">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <h2 class="font-heading text-4xl font-semibold text-text-primary-light dark:text-text-primary-dark" data-lang="portfolio_title">Recente Projecten</h2>
+                    <p class="text-lg mt-2" data-lang="portfolio_subtitle">Een selectie van mijn werk.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Project 1: Calculator -->
+                    <div class="project-card bg-foreground-light dark:bg-foreground-dark border border-border-light dark:border-border-dark rounded-xl shadow-lg overflow-hidden group" data-aos="fade-up" data-aos-delay="100">
+                        <div class="relative">
+                            <img src="thumbnail-rekentool.jpg" alt="Project Koffie Calculator" class="w-full h-60 object-cover transition-transform duration-500">
+                             <div class="project-overlay absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 transition-opacity duration-500">
+                                <a href="rekentool.html" class="text-white border-2 border-white py-2 px-6 rounded-lg hover:bg-white hover:text-black transition-all" data-lang="demo_button" target="_blank">Bekijk Demo</a>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-heading text-xl font-medium text-text-primary-light dark:text-text-primary-dark" data-lang="project3_title">Koffie Calculator</h3>
+                            <p class="mt-1" data-lang="project3_desc">Custom JavaScript Tool</p>
+                        </div>
+                    </div>
+                    <!-- Project 2: Leodoro -->
+                    <div class="project-card bg-foreground-light dark:bg-foreground-dark border border-border-light dark:border-border-dark rounded-xl shadow-lg overflow-hidden group" data-aos="fade-up" data-aos-delay="200">
+                        <div class="relative">
+                            <img src="thumbnail-leodoro-koffie.jpg" alt="Project Leodoro Koffie" class="w-full h-60 object-cover transition-transform duration-500">
+                            <div class="project-overlay absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 transition-opacity duration-500">
+                                <a href="case-study-leodorokoffie.pdf" class="text-white border-2 border-white py-2 px-6 rounded-lg hover:bg-white hover:text-black transition-all" data-lang="case_study_button" target="_blank">Bekijk Case Study</a>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-heading text-xl font-medium text-text-primary-light dark:text-text-primary-dark">Leodoro Koffie</h3>
+                            <p class="mt-1" data-lang="project1_desc">Shopify Webshop & SEO</p>
+                        </div>
+                    </div>
+                    <!-- Project 3: KlikAanKlikUit -->
+                    <div class="project-card bg-foreground-light dark:bg-foreground-dark border border-border-light dark:border-border-dark rounded-xl shadow-lg overflow-hidden group" data-aos="fade-up" data-aos-delay="300">
+                        <div class="relative">
+                            <img src="thumbnail-klikaanklikuit.jpg" alt="Project KlikAanKlikUit" class="w-full h-60 object-cover transition-transform duration-500">
+                             <div class="project-overlay absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center opacity-0 transition-opacity duration-500">
+                                <a href="https://klikaanklikuit.nl/" class="text-white border-2 border-white py-2 px-6 rounded-lg hover:bg-white hover:text-black transition-all" data-lang="case_study_button2" target="_blank">Bekijk Case Study</a>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-heading text-xl font-medium text-text-primary-light dark:text-text-primary-dark">KlikAanKlikUit</h3>
+                            <p class="mt-1" data-lang="project2_desc">WordPress & Content Marketing</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Verborgen projecten -->
+                <div id="extra-projects" class="hidden grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+                    <!-- Project 4: Bellavino -->
+                    <div class="project-card bg-foreground-light dark:bg-foreground-dark border border-border-light dark:border-border-dark rounded-xl shadow-lg overflow-hidden group">
+                        <div class="relative">
+                            <img src="https://placehold.co/600x400/374151/9ca3af?text=BellaVino" alt="Project BellaVino" class="w-full h-60 object-cover">
+                            <div class="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center">
+                                <span class="text-white text-2xl font-bold" data-lang="website_offline">Website Offline</span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-heading text-xl font-medium text-text-primary-light dark:text-text-primary-dark" data-lang="project_bellavino_title">BellaVino</h3>
+                            <p class="mt-1" data-lang="project_bellavino_desc">Shopify Webshop & E-commerce</p>
+                        </div>
+                    </div>
+                    <!-- Project 5: Affiliate -->
+                    <div class="project-card bg-foreground-light dark:bg-foreground-dark border border-border-light dark:border-border-dark rounded-xl shadow-lg overflow-hidden group">
+                        <div class="relative">
+                            <img src="https://placehold.co/600x400/FFD700/000000?text=Affiliate" alt="Project Affiliate Website" class="w-full h-60 object-cover">
+                            <div class="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center">
+                                <span class="text-white text-2xl font-bold" data-lang="coming_soon">Coming Soon</span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-heading text-xl font-medium text-text-primary-light dark:text-text-primary-dark" data-lang="project_affiliate_title">Affiliate Website</h3>
+                            <p class="mt-1" data-lang="project_affiliate_desc">WordPress & Advanced SEO</p>
+                        </div>
+                    </div>
+                    <!-- Project 6: GEO -->
+                    <div class="project-card bg-foreground-light dark:bg-foreground-dark border border-border-light dark:border-border-dark rounded-xl shadow-lg overflow-hidden group">
+                        <div class="relative">
+                            <img src="https://placehold.co/600x400/00CED1/FFFFFF?text=GEO" alt="Project GEO Website" class="w-full h-60 object-cover">
+                            <div class="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center">
+                                <span class="text-white text-2xl font-bold" data-lang="coming_soon2">Coming Soon</span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-heading text-xl font-medium text-text-primary-light dark:text-text-primary-dark" data-lang="project_geo_title">GEO Website</h3>
+                            <p class="mt-1" data-lang="project_geo_desc">Generative Engine Optimization</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Meer knop -->
+                <div class="text-center mt-12">
+                    <button id="show-more-button" class="bg-accent-light hover:bg-accent-hover-light dark:bg-accent-dark dark:hover:bg-accent-hover-dark text-white font-bold py-3 px-6 rounded-lg transition-all text-lg">
+                        <span data-lang="show_more">Meer projecten</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sectie 5: Werkwijze (VERNIEUWD) -->
+        <section id="werkwijze" class="bg-foreground-light dark:bg-foreground-dark py-20 md:py-28 process-section-bg">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="font-heading text-4xl font-semibold text-text-primary-light dark:text-text-primary-dark" data-lang="process_title">Onze Samenwerking</h2>
+                    <p class="text-lg mt-2" data-lang="process_subtitle">In 4 duidelijke stappen naar een succesvol resultaat.</p>
+                </div>
+                <div class="relative">
+                    <div class="hidden md:block absolute top-5 left-1/2 w-0.5 h-full bg-border-light dark:bg-border-dark"></div>
+                    <div class="grid md:grid-cols-2 gap-x-12 gap-y-8">
+                        <!-- Step 1 -->
+                        <div class="flex items-start gap-4 md:justify-end md:text-right">
+                            <div class="order-2 md:order-1">
+                                <h3 class="font-heading text-2xl font-medium text-text-primary-light dark:text-text-primary-dark mb-2" data-lang="step1_title">1. Kennismaking & Strategie</h3>
+                                <p data-lang="step1_desc">We bespreken je doelen. Wat wil je bereiken en wie is je doelgroep? Dit vormt de basis voor het project.</p>
+                            </div>
+                            <div class="order-1 md:order-2 flex-shrink-0 bg-accent-light dark:bg-accent-dark text-white h-12 w-12 rounded-full flex items-center justify-center font-bold text-xl">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                            </div>
+                        </div>
+                        <div class="hidden md:block"></div> <div class="hidden md:block"></div>
+                        <!-- Step 2 -->
+                         <div class="flex items-start gap-4">
+                            <div class="flex-shrink-0 bg-accent-light dark:bg-accent-dark text-white h-12 w-12 rounded-full flex items-center justify-center font-bold text-xl">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                            </div>
+                            <div>
+                                <h3 class="font-heading text-2xl font-medium text-text-primary-light dark:text-text-primary-dark mb-2" data-lang="step2_title">2. Concept & Bouw</h3>
+                                <p data-lang="step2_desc">Ik vertaal de strategie naar een concreet ontwerp en start met de ontwikkeling van de website of tool.</p>
+                            </div>
+                        </div>
+                        <!-- Step 3 -->
+                        <div class="flex items-start gap-4 md:justify-end md:text-right">
+                             <div class="order-2 md:order-1">
+                                <h3 class="font-heading text-2xl font-medium text-text-primary-light dark:text-text-primary-dark mb-2" data-lang="step3_title">3. Feedback & Oplevering</h3>
+                                <p data-lang="step3_desc">Je krijgt de kans om feedback te geven. Na verwerking lever ik een complete, geteste website op.</p>
+                            </div>
+                            <div class="order-1 md:order-2 flex-shrink-0 bg-accent-light dark:bg-accent-dark text-white h-12 w-12 rounded-full flex items-center justify-center font-bold text-xl">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </div>
+                        </div>
+                        <div class="hidden md:block"></div> <div class="hidden md:block"></div>
+                        <!-- Step 4 -->
+                        <div class="flex items-start gap-4">
+                            <div class="flex-shrink-0 bg-accent-light dark:bg-accent-dark text-white h-12 w-12 rounded-full flex items-center justify-center font-bold text-xl">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                            </div>
+                            <div>
+                                <h3 class="font-heading text-2xl font-medium text-text-primary-light dark:text-text-primary-dark mb-2" data-lang="step4_title">4. Groei & Support</h3>
+                                <p data-lang="step4_desc">De website staat live. Nu focussen we op groei (bv. via SEO) en bied ik ondersteuning waar nodig.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sectie 6: Contact -->
+        <section id="contact" class="py-20 md:py-28">
+            <div class="container mx-auto px-6">
+                <div class="bg-text-primary-light dark:bg-foreground-dark text-white rounded-lg shadow-2xl p-8 md:p-16 max-w-4xl mx-auto">
+                    <div class="text-center">
+                        <h2 class="font-heading text-4xl font-semibold" data-lang="contact_title">Klaar om de volgende stap te zetten?</h2>
+                        <p class="text-lg text-gray-300 mb-8" data-lang="contact_subtitle">Laten we vrijblijvend kennismaken. Stuur me een bericht en ik neem binnen 24 uur contact met je op.</p>
+                    </div>
+                    <!-- BELANGRIJK: De 'action' van dit formulier moet naar een backend service wijzen. Zie de aparte instructies. -->
+                    <form action="#" method="POST">
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="name" class="block mb-2 font-medium" data-lang="form_name">Naam</label>
+                                <input type="text" id="name" name="name" class="w-full text-text-primary-light bg-gray-200 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-accent-light dark:focus:ring-accent-dark" required>
+                            </div>
+                            <div>
+                                <label for="email" class="block mb-2 font-medium" data-lang="form_email">E-mailadres</label>
+                                <input type="email" id="email" name="email" class="w-full text-text-primary-light bg-gray-200 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-accent-light dark:focus:ring-accent-dark" required>
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <label for="message" class="block mb-2 font-medium" data-lang="form_message">Bericht</label>
+                            <textarea id="message" name="message" rows="5" class="w-full text-text-primary-light bg-gray-200 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-accent-light dark:focus:ring-accent-dark" required></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="bg-accent-light hover:bg-accent-hover-light dark:bg-accent-dark dark:hover:bg-accent-hover-dark text-white font-bold py-3 px-6 rounded-lg transition-all text-lg" data-lang="form_button">
+                                Verstuur Bericht
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto px-6 text-center text-gray-400">
+            <p data-lang="footer_text">&copy; 2025 Cas van Hövell. Alle rechten voorbehouden.</p>
+        </div>
+    </footer>
+
+    <!-- AOS (Animate On Scroll) Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- TEXT CONTENT FOR TRANSLATION ---
+        const translations = {
+            nl: {
+                nav_brand: "HWW Freelance",
+                nav_services: "Diensten",
+                nav_portfolio: "Portfolio",
+                nav_process: "Werkwijze",
+                nav_contact: "Contact",
+                nav_services_mobile: "Diensten",
+                nav_portfolio_mobile: "Portfolio",
+                nav_process_mobile: "Werkwijze",
+                nav_contact_mobile: "Contact",
+                language_mobile: "Taal:",
+                theme_mobile: "Thema:",
+                hero_title: "Websites die Werken.<br>Resultaat dat Telt.",
+                hero_subtitle: "Ik help ondernemers groeien met professionele WordPress & Shopify websites, geoptimaliseerd voor maximale vindbaarheid en conversie.",
+                hero_button: "Bekijk mijn werk",
+                about_title: "Jouw partner in digitale groei.",
+                about_text: "Hoi, ik ben Cas van Hövell. Met een passie voor zowel strakke code als slimme marketing, bouw ik meer dan alleen websites; ik bouw een fundament voor jouw online succes. Mijn aanpak is praktisch en resultaatgericht. Ik geloof niet in onnodig complexe oplossingen, maar in wat écht werkt voor jouw bedrijf. Met een basis in development en een scherp oog voor SEO, zorg ik ervoor dat je niet alleen online aanwezig bent, maar ook gevonden wordt.",
+                services_title: "Mijn Expertise",
+                services_subtitle: "Diensten om jouw online aanwezigheid te versterken.",
+                service1_title: "Web Development",
+                service1_desc: "Professionele, snelle en gebruiksvriendelijke websites en webshops in WordPress en Shopify. Volledig op maat en klaar voor de toekomst.",
+                service2_title: "SEO Optimalisatie",
+                service2_desc: "Van technisch fundament tot content strategie. Ik zorg ervoor dat jouw doelgroep je website daadwerkelijk kan vinden via Google.",
+                service3_title: "Tools & Maatwerk",
+                service3_desc: "Behoefte aan een specifieke tool of koppeling? Ik denk mee en bouw praktische oplossingen die jouw werk makkelijker maken.",
+                portfolio_title: "Recente Projecten",
+                portfolio_subtitle: "Een selectie van mijn werk.",
+                case_study_button: "Bekijk Case Study",
+                case_study_button2: "Bekijk Case Study",
+                case_study_button_bellavino: "Bekijk Case Study",
+                project_bellavino_title: "Bellavino",
+                project_bellavino_desc: "Shopify Webshop & E-commerce",
+                website_offline: "Website Offline",
+                demo_button: "Bekijk Demo",
+                project1_desc: "Shopify Webshop & SEO",
+                project2_desc: "WordPress & Content Marketing",
+                project3_title: "Koffie Calculator",
+                project3_desc: "Custom JavaScript Tool",
+                coming_soon: "Coming Soon",
+                coming_soon2: "Coming Soon",
+                project_affiliate_title: "Affiliate Website",
+                project_affiliate_desc: "WordPress & Advanced SEO",
+                project_geo_title: "GEO Website",
+                project_geo_desc: "Generative Engine Optimization",
+                show_more: "Meer projecten",
+                show_less: "Minder projecten",
+                process_title: "Onze Samenwerking",
+                process_subtitle: "In 4 duidelijke stappen naar een succesvol resultaat.",
+                step1_title: "1. Kennismaking & Strategie",
+                step1_desc: "We bespreken je doelen. Wat wil je bereiken en wie is je doelgroep? Dit vormt de basis voor het project.",
+                step2_title: "2. Concept & Bouw",
+                step2_desc: "Ik vertaal de strategie naar een concreet ontwerp en start met de ontwikkeling van de website of tool.",
+                step3_title: "3. Feedback & Oplevering",
+                step3_desc: "Je krijgt de kans om feedback te geven. Na verwerking lever ik een complete, geteste website op.",
+                step4_title: "4. Groei & Support",
+                step4_desc: "De website staat live. Nu focussen we op groei (bv. via SEO) en bied ik ondersteuning waar nodig.",
+                contact_title: "Klaar om de volgende stap te zetten?",
+                contact_subtitle: "Laten we vrijblijvend kennismaken. Stuur me een bericht en ik neem binnen 24 uur contact met je op.",
+                form_name: "Naam",
+                form_email: "E-mailadres",
+                form_message: "Bericht",
+                form_button: "Verstuur Bericht",
+                footer_text: "&copy; 2025 Cas van Hövell. Alle rechten voorbehouden."
+            },
+            en: {
+                nav_brand: "HWW Freelance",
+                nav_services: "Services",
+                nav_portfolio: "Portfolio",
+                nav_process: "Process",
+                nav_contact: "Contact",
+                nav_services_mobile: "Services",
+                nav_portfolio_mobile: "Portfolio",
+                nav_process_mobile: "Process",
+                nav_contact_mobile: "Contact",
+                language_mobile: "Language:",
+                theme_mobile: "Theme:",
+                hero_title: "Websites that Work.<br>Results that Matter.",
+                hero_subtitle: "I help entrepreneurs grow with professional WordPress & Shopify websites, optimized for maximum findability and conversion.",
+                hero_button: "View my work",
+                about_title: "Your partner in digital growth.",
+                about_text: "Hi, I'm Cas van Hövell. With a passion for both clean code and smart marketing, I build more than just websites; I build a foundation for your online success. My approach is practical and result-oriented. I don't believe in unnecessarily complex solutions, but in what truly works for your business. With a background in development and a keen eye for SEO, I ensure you're not just present online, but also found.",
+                services_title: "My Expertise",
+                services_subtitle: "Services to strengthen your online presence.",
+                service1_title: "Web Development",
+                service1_desc: "Professional, fast, and user-friendly websites and webshops in WordPress and Shopify. Fully customized and ready for the future.",
+                service2_title: "SEO Optimization",
+                service2_desc: "From technical foundation to content strategy. I ensure that your target audience can actually find your website through Google.",
+                service3_title: "Tools & Customization",
+                service3_desc: "Need a specific tool or integration? I'll think along and build practical solutions that make your work easier.",
+                portfolio_title: "Recent Projects",
+                portfolio_subtitle: "A selection of my work.",
+                case_study_button: "View Case Study",
+                case_study_button2: "View Case Study",
+                case_study_button_bellavino: "View Case Study",
+                project_bellavino_title: "Bellavino",
+                project_bellavino_desc: "Shopify Webshop & E-commerce",
+                website_offline: "Website Offline",
+                demo_button: "View Demo",
+                project1_desc: "Shopify Webshop & SEO",
+                project2_desc: "WordPress & Content Marketing",
+                project3_title: "Coffee Calculator",
+                project3_desc: "Custom JavaScript Tool",
+                coming_soon: "Coming Soon",
+                coming_soon2: "Coming Soon",
+                project_affiliate_title: "Affiliate Website",
+                project_affiliate_desc: "WordPress & Advanced SEO",
+                project_geo_title: "GEO Website",
+                project_geo_desc: "Generative Engine Optimization",
+                show_more: "More projects",
+                show_less: "Less projects",
+                process_title: "Our Collaboration",
+                process_subtitle: "To a successful result in 4 clear steps.",
+                step1_title: "1. Introduction & Strategy",
+                step1_desc: "We discuss your goals. What do you want to achieve and who is your target audience? This forms the basis for the project.",
+                step2_title: "2. Concept & Build",
+                step2_desc: "I translate the strategy into a concrete design and start the development of the website or tool.",
+                step3_title: "3. Feedback & Delivery",
+                step3_desc: "You get the chance to provide feedback. After processing, I deliver a complete, tested website.",
+                step4_title: "4. Growth & Support",
+                step4_desc: "The website is live. Now we focus on growth (e.g., via SEO) and I offer support where needed.",
+                contact_title: "Ready to take the next step?",
+                contact_subtitle: "Let's have a no-obligation chat. Send me a message, and I'll get back to you within 24 hours.",
+                form_name: "Name",
+                form_email: "Email Address",
+                form_message: "Message",
+                form_button: "Send Message",
+                footer_text: "&copy; 2025 Cas van Hövell. All rights reserved."
+            }
+        };
+
+        // --- DOM ELEMENT REFERENCES ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        const langToggles = [document.getElementById('lang-toggle'), document.getElementById('lang-toggle-mobile')];
+        
+        const extraProjects = document.getElementById('extra-projects');
+        const showMoreButton = document.getElementById('show-more-button');
+
+        // --- THEME TOGGLE LOGIC (FINAL ROBUST SCRIPT) ---
+        const themeToggles = [document.getElementById('theme-toggle'), document.getElementById('theme-toggle-mobile')];
+        const themeToggleDarkIcons = [document.getElementById('theme-toggle-dark-icon'), document.getElementById('theme-toggle-dark-icon-mobile')];
+        const themeToggleLightIcons = [document.getElementById('theme-toggle-light-icon'), document.getElementById('theme-toggle-light-icon-mobile')];
+
+        const applyTheme = () => {
+            if (localStorage.getItem('color-theme') === 'dark') {
+                document.documentElement.classList.add('dark');
+                themeToggleLightIcons.forEach(el => el.classList.remove('hidden'));
+                themeToggleDarkIcons.forEach(el => el.classList.add('hidden'));
+            } else {
+                document.documentElement.classList.remove('dark');
+                themeToggleLightIcons.forEach(el => el.classList.add('hidden'));
+                themeToggleDarkIcons.forEach(el => el.classList.remove('hidden'));
+            }
+        };
+
+        const handleThemeToggle = () => {
+            if (localStorage.getItem('color-theme')) {
+                if (localStorage.getItem('color-theme') === 'light') {
+                    localStorage.setItem('color-theme', 'dark');
+                } else {
+                    localStorage.setItem('color-theme', 'light');
+                }
+            } else {
+                if (document.documentElement.classList.contains('dark')) {
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    localStorage.setItem('color-theme', 'dark');
+                }
+            }
+            applyTheme();
+        };
+
+        themeToggles.forEach(btn => btn.addEventListener('click', handleThemeToggle));
+        
+        // --- TRANSLATION LOGIC ---
+        const applyLanguage = (lang) => {
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-lang]').forEach(el => {
+                const key = el.getAttribute('data-lang');
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerHTML = translations[lang][key];
+                }
+            });
+            langToggles.forEach(btn => btn.textContent = lang === 'nl' ? 'EN' : 'NL');
+        };
+
+        const toggleLanguage = () => {
+            const newLang = (localStorage.getItem('language') || 'nl') === 'nl' ? 'en' : 'nl';
+            localStorage.setItem('language', newLang);
+            applyLanguage(newLang);
+        };
+
+        langToggles.forEach(btn => btn.addEventListener('click', toggleLanguage));
+
+        // --- PORTFOLIO 'SHOW MORE' LOGIC ---
+        showMoreButton.addEventListener('click', () => {
+            const isHidden = extraProjects.classList.contains('hidden');
+            const currentLang = localStorage.getItem('language') || 'nl';
+            
+            extraProjects.classList.toggle('hidden');
+            
+            if (isHidden) {
+                showMoreButton.querySelector('span').textContent = translations[currentLang].show_less;
+            } else {
+                showMoreButton.querySelector('span').textContent = translations[currentLang].show_more;
+            }
+        });
+
+        // --- MOBILE MENU LOGIC ---
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // --- INITIALIZATION ---
+        applyTheme(); // Apply theme on initial load
+
+        const savedLang = localStorage.getItem('language') || 'nl';
+        applyLanguage(savedLang);
+
+        AOS.init({
+            duration: 800, // values from 0 to 3000, with step 50ms
+            once: true, // whether animation should happen only once - while scrolling down
+        });
+        
+    });
+    </script>
+</body>
+</html>
