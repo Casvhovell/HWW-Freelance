@@ -21,4 +21,5 @@ jobs:
           password: ${{ secrets.SERVER_PASS }}
           port: 22
           source: "."
-          target: "/pad/naar/doelmap/op/server"
+          target: "."
+          debug: true
