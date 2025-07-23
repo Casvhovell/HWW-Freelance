@@ -20,3 +20,4 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           password: ${{ secrets.SERVER_PASS }}
           port: 22
+          sftp: true # Voeg deze regel toe om SFTP te forceren
