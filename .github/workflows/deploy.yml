@@ -21,6 +21,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           password: ${{ secrets.SERVER_PASS }}
           port: 22
+          sftp: true # <-- Deze regel forceert SFTP
           # De onderstaande regel is optioneel, maar verwijdert oude bestanden
           # die niet meer in je repository zitten. Verwijder de '#' om het te activeren.
           # dangerous-clean-slate: true
