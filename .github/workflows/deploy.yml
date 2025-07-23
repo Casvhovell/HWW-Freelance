@@ -9,19 +9,17 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Deploy to server via SFTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      - name: Deploy to server via SCP
+        uses: appleboy/scp-action@v0.1.7
         with:
-          server: ${{ secrets.SERVER_HOST }}
+          host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           password: ${{ secrets.SERVER_PASS }}
           port: 22
-          sftp: true # <-- Deze regel forceert SFTP
-          # De onderstaande regel is optioneel, maar verwijdert oude bestanden
-          # die niet meer in je repository zitten. Verwijder de '#' om het te activeren.
-          # dangerous-clean-slate: true
+          source: "."
+          target: "/"  # <-- We proberen nu "/" in plaats van "."
+          debug: true
