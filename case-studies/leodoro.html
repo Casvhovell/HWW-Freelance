@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="nl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Study: Leodoro Koffie | Cas van Hövell</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Configuratie gebaseerd op PRD -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        heading: ['Clash Display', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        // Licht Thema
+                        'background-light': '#F9FAFB',
+                        'foreground-light': '#FFFFFF',
+                        'text-primary-light': '#111827',
+                        'text-secondary-light': '#6B7280',
+                        'accent-light': '#4F46E5',
+                        'accent-hover-light': '#4338CA',
+                        'border-light': '#E5E7EB',
+                        // Donker Thema
+                        'background-dark': '#111827',
+                        'foreground-dark': '#1F2937',
+                        'text-primary-dark': '#F9FAFB',
+                        'text-secondary-dark': '#9CA3AF',
+                        'accent-dark': '#6366F1',
+                        'accent-hover-dark': '#4F46E5',
+                        'border-dark': '#374151',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Lettertypes uit PRD -->
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://rsms.me/">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    
+    <style>
+        /* Basis stijlen */
+        body {
+            font-family: 'Inter', 'sans-serif';
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Clash Display', 'sans-serif';
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-secondary-light dark:text-text-secondary-dark antialiased">
+
+    <!-- Vereenvoudigde Navigatiebalk -->
+    <header class="bg-foreground-light dark:bg-foreground-dark text-text-primary-light dark:text-text-primary-dark sticky top-0 z-50 shadow-md">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="../" class="flex items-center gap-2 hover:text-accent-light dark:hover:text-accent-dark transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                Terug naar portfolio
+            </a>
+            <div class="flex items-center space-x-2">
+                <button id="theme-toggle" type="button" class="h-10 w-10 flex items-center justify-center text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-light dark:focus:ring-offset-gray-800 rounded-lg text-sm">
+                    <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                    <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 5.05A1 1 0 003.636 6.464l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 0zM3 11a1 1 0 100-2H2a1 1 0 100 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-16">
+        <!-- Hero Sectie van de Case Study -->
+        <section class="text-center max-w-3xl mx-auto">
+            <h1 class="font-heading text-4xl md:text-5xl font-semibold text-text-primary-light dark:text-text-primary-dark">Succesvolle Transformatie naar Shopify</h1>
+            <p class="mt-4 text-lg">SEO-Optimalisatie en Conversieverbetering voor Leodoro Koffie</p>
+            <div class="mt-6 text-sm text-text-secondary-light dark:text-text-secondary-dark">
+                <span>Door: Cas van Hövell</span> | <span>Portfolio: 2025</span>
+            </div>
+        </section>
+
+        <!-- Mockup Afbeelding -->
+        <section class="my-16">
+            <img src="case-study-leodoro-mockup.png" alt="Mockup van de Leodoro Koffie website op desktop en mobiel" class="rounded-xl shadow-2xl mx-auto w-full max-w-4xl">
+        </section>
+
+        <!-- Project Details -->
+        <div class="max-w-3xl mx-auto grid md:grid-cols-3 gap-12">
+            <!-- De Uitdaging -->
+            <div class="md:col-span-1">
+                <h2 class="font-heading text-2xl font-semibold text-text-primary-light dark:text-text-primary-dark mb-4">De Uitdaging</h2>
+            </div>
+            <div class="md:col-span-2">
+                <p class="text-lg leading-relaxed">Leodoro Koffie wilde hun bestaande WordPress-website vervangen door een snellere, conversiegerichte en makkelijk te beheren webshop om hun online verkoop te professionaliseren en de vindbaarheid in Google te vergroten.</p>
+            </div>
+
+            <!-- Divider -->
+            <div class="md:col-span-3 border-t border-border-light dark:border-border-dark"></div>
+
+            <!-- Mijn Oplossing -->
+            <div class="md:col-span-1">
+                <h2 class="font-heading text-2xl font-semibold text-text-primary-light dark:text-text-primary-dark mb-4">Mijn Oplossing</h2>
+            </div>
+            <div class="md:col-span-2">
+                <ul class="space-y-4 list-disc list-inside text-lg">
+                    <li><b>Strategische analyse en advies:</b> Zorgvuldig advies voor de overstap naar Shopify om aan de specifieke eisen van Leodoro Koffie te voldoen.</li>
+                    <li><b>Naadloze migratie:</b> Verhuisde producten en content zonder verlies van data of functionaliteit.</li>
+                    <li><b>Thema-implementatie en maatwerk:</b> Creëerde een gebruiksvriendelijke interface met een op maat gemaakt thema voor de beste gebruikerservaring.</li>
+                    <li><b>Uitgebreid zoekwoordenonderzoek:</b> Toepassing van on-page SEO op alle pagina's om zichtbaarheid te verhogen.</li>
+                    <li><b>SEO-vriendelijke teksten:</b> Schreef overtuigende content die zowel de gebruiker aanspreekt als zoekmachines bedient.</li>
+                    <li><b>Technische SEO-optimalisatie:</b> Verbeterde de mobiele prestaties en laadsnelheid voor een betere ervaring en ranking.</li>
+                </ul>
+            </div>
+
+            <!-- Divider -->
+            <div class="md:col-span-3 border-t border-border-light dark:border-border-dark"></div>
+
+            <!-- Technologieën -->
+            <div class="md:col-span-1">
+                <h2 class="font-heading text-2xl font-semibold text-text-primary-light dark:text-text-primary-dark mb-4">Technologieën & Skills</h2>
+            </div>
+            <div class="md:col-span-2">
+                <h4 class="font-heading text-lg font-semibold text-text-primary-light dark:text-text-primary-dark mb-2">Platforms en Tools:</h4>
+                <p class="mb-4">Shopify, Canva, Adobe Illustrator/Photoshop, Google Search Console, PageSpeed Insight, SEMrush, Ahrefs, Screaming Frog, Google Analytics</p>
+                <h4 class="font-heading text-lg font-semibold text-text-primary-light dark:text-text-primary-dark mb-2">Technische Vaardigheden:</h4>
+                <p>Custom Liquid/CSS/HTML</p>
+            </div>
+        </div>
+
+        <!-- Resultaat Sectie -->
+        <section class="my-16 bg-foreground-light dark:bg-foreground-dark py-16 rounded-xl border border-border-light dark:border-border-dark">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h2 class="font-heading text-3xl font-semibold text-text-primary-light dark:text-text-primary-dark mb-4">Het Resultaat</h2>
+                    <p class="text-lg leading-relaxed mb-8">Leverde een professionele, merkconsistente webshop op die de klant nu volledig zelfstandig kan beheren, met significant verbeterde technische prestaties.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <div class="text-center bg-background-light dark:bg-background-dark p-6 rounded-lg border border-border-light dark:border-border-dark">
+                        <h3 class="font-heading text-lg font-medium text-text-secondary-light dark:text-text-secondary-dark">Prestatiescore Desktop</h3>
+                        <p class="font-heading text-6xl font-semibold text-green-500 mt-2">99</p>
+                    </div>
+                    <div class="text-center bg-background-light dark:bg-background-dark p-6 rounded-lg border border-border-light dark:border-border-dark">
+                        <h3 class="font-heading text-lg font-medium text-text-secondary-light dark:text-text-secondary-dark">Prestatiescore Mobiel</h3>
+                        <p class="font-heading text-6xl font-semibold text-green-500 mt-2">96</p>
+                    </div>
+                </div>
+                <div class="text-center mt-12">
+                     <a href="https://www.leodorokoffie.nl" target="_blank" class="bg-accent-light hover:bg-accent-hover-light dark:bg-accent-dark dark:hover:bg-accent-hover-dark text-white font-bold py-3 px-6 rounded-lg transition-all text-lg">
+                        Bekijk de live website
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto px-6 text-center text-gray-400">
+            <p data-lang="footer_text">&copy; 2025 Cas van Hövell. Alle rechten voorbehouden.</p>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- THEME TOGGLE LOGIC ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+        const applyTheme = () => {
+            if (localStorage.getItem('color-theme') === 'dark') {
+                document.documentElement.classList.add('dark');
+                themeToggleLightIcon.classList.remove('hidden');
+                themeToggleDarkIcon.classList.add('hidden');
+            } else {
+                document.documentElement.classList.remove('dark');
+                themeToggleLightIcon.classList.add('hidden');
+                themeToggleDarkIcon.classList.remove('hidden');
+            }
+        };
+
+        const handleThemeToggle = () => {
+            if (localStorage.getItem('color-theme')) {
+                if (localStorage.getItem('color-theme') === 'light') {
+                    localStorage.setItem('color-theme', 'dark');
+                } else {
+                    localStorage.setItem('color-theme', 'light');
+                }
+            } else {
+                if (document.documentElement.classList.contains('dark')) {
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    localStorage.setItem('color-theme', 'dark');
+                }
+            }
+            applyTheme();
+        };
+
+        themeToggle.addEventListener('click', handleThemeToggle);
+        
+        // --- INITIALIZATION ---
+        applyTheme();
+    });
+    </script>
+</body>
+</html>

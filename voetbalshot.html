@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="nl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voetbalshot | Jouw Voetbalspel</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Basis stijlen */
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        /* Achtergrond met voetbalveld patroon */
+        .hero-bg {
+            background-color: #1a202c;
+            background-image: 
+                linear-gradient(rgba(26, 32, 44, 0.9), rgba(26, 32, 44, 0.9)),
+                url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 antialiased">
+
+    <!-- Navigatiebalk -->
+    <header class="bg-white text-gray-800 sticky top-0 z-50 shadow-md">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- LOGO HIER -->
+            <a href="#" class="text-2xl font-bold text-green-600">Voetbalshot</a>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="#uitleg" class="hover:text-green-600 transition-colors">Hoe werkt het?</a>
+                <a href="#ranglijst" class="hover:text-green-600 transition-colors">Ranglijst</a>
+                <a href="#nieuws" class="hover:text-green-600 transition-colors">Nieuws</a>
+                <a href="#contact" class="hover:text-green-600 transition-colors">Contact</a>
+            </div>
+            <div class="hidden md:flex items-center space-x-2">
+                 <a href="#" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition-all">Doe mee!</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden">
+                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <!-- Mobiel menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4">
+            <a href="#uitleg" class="block py-2 hover:text-green-600 transition-colors">Hoe werkt het?</a>
+            <a href="#ranglijst" class="block py-2 hover:text-green-600 transition-colors">Ranglijst</a>
+            <a href="#nieuws" class="block py-2 hover:text-green-600 transition-colors">Nieuws</a>
+            <a href="#contact" class="block py-2 hover:text-green-600 transition-colors">Contact</a>
+            <a href="#" class="block mt-2 bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition-all text-center">Doe mee!</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Sectie 1: Hero -->
+        <section id="hero" class="hero-bg text-white py-20 md:py-32">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4">Voorspel. Scoor. Win.</h1>
+                <p class="text-lg md:text-xl max-w-3xl mx-auto mb-8 text-gray-300">
+                    Denk jij dat je de uitslagen kunt voorspellen? Doe mee met Voetbalshot, daag je vrienden uit en word de ultieme voetbalkenner!
+                </p>
+                <div class="space-x-4">
+                    <a href="#" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg transition-all text-lg">
+                        Start met voorspellen
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sectie 2: Uitleg -->
+        <section id="uitleg" class="py-20 md:py-28">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Hoe werkt het?</h2>
+                    <p class="text-lg text-gray-600 mt-2">In 3 simpele stappen naar de overwinning.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8 text-center">
+                    <!-- Stap 1 -->
+                    <div class="bg-white p-8 rounded-lg shadow-md">
+                        <div class="inline-block bg-green-600 text-white p-4 rounded-full mb-4">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2">1. Registreer</h3>
+                        <p>Maak gratis een account aan en krijg direct toegang tot alle speelrondes.</p>
+                    </div>
+                    <!-- Stap 2 -->
+                    <div class="bg-white p-8 rounded-lg shadow-md">
+                        <div class="inline-block bg-green-600 text-white p-4 rounded-full mb-4">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2">2. Voorspel</h3>
+                        <p>Geef voor elke wedstrijd jouw voorspelling door. Je kunt je voorspelling wijzigen tot de aftrap.</p>
+                    </div>
+                    <!-- Stap 3 -->
+                    <div class="bg-white p-8 rounded-lg shadow-md">
+                        <div class="inline-block bg-green-600 text-white p-4 rounded-full mb-4">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2">3. Klim op!</h3>
+                        <p>Volg de ranglijst en zie hoe jouw voetbalkennis zich verhoudt tot die van je vrienden.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sectie 3: Ranglijst -->
+        <section id="ranglijst" class="bg-white py-20 md:py-28">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Ranglijst</h2>
+                    <p class="text-lg text-gray-600 mt-2">Wie staat er bovenaan?</p>
+                </div>
+                <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+                    <table class="w-full">
+                        <thead class="bg-gray-200">
+                            <tr>
+                                <th class="p-4 text-left font-bold text-gray-700">#</th>
+                                <th class="p-4 text-left font-bold text-gray-700">Speler</th>
+                                <th class="p-4 text-right font-bold text-gray-700">Punten</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b">
+                                <td class="p-4 font-semibold">1</td>
+                                <td class="p-4 font-semibold">VoetbalKoning_7</td>
+                                <td class="p-4 text-right font-semibold text-green-600">148</td>
+                            </tr>
+                            <tr class="bg-gray-50 border-b">
+                                <td class="p-4">2</td>
+                                <td class="p-4">SuperSpits99</td>
+                                <td class="p-4 text-right">142</td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="p-4">3</td>
+                                <td class="p-4">Anna_Tikitaka</td>
+                                <td class="p-4 text-right">135</td>
+                            </tr>
+                             <tr class="bg-gray-50 border-b">
+                                <td class="p-4">4</td>
+                                <td class="p-4">Jeroen (Jij!)</td>
+                                <td class="p-4 text-right">129</td>
+                            </tr>
+                             <tr class="border-b">
+                                <td class="p-4">5</td>
+                                <td class="p-4">De Buitenspeler</td>
+                                <td class="p-4 text-right">125</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sectie 4: Nieuws/Blog -->
+        <section id="nieuws" class="py-20 md:py-28">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Laatste Nieuws</h2>
+                    <p class="text-lg text-gray-600 mt-2">Updates, analyses en meer.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Artikel 1 -->
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <img src="https://placehold.co/600x400/16a34a/FFFFFF?text=Analyse" alt="Analyse van de speelronde" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <p class="text-sm text-gray-500 mb-2">10 Augustus 2025</p>
+                            <h3 class="text-xl font-bold mb-2">Analyse: De verrassingen van speelronde 3</h3>
+                            <p class="text-gray-700 mb-4">Niemand zag de overwinning van de underdog aankomen. We duiken in de statistieken...</p>
+                            <a href="#" class="text-green-600 font-bold hover:underline">Lees meer</a>
+                        </div>
+                    </div>
+                    <!-- Artikel 2 -->
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <img src="https://placehold.co/600x400/4f46e5/FFFFFF?text=Speler" alt="Speler in de spotlight" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <p class="text-sm text-gray-500 mb-2">8 Augustus 2025</p>
+                            <h3 class="text-xl font-bold mb-2">Speler in de spotlight: VoetbalKoning_7</h3>
+                            <p class="text-gray-700 mb-4">Hoe blijft de koploper zo consistent scoren? We vroegen het hem zelf...</p>
+                            <a href="#" class="text-green-600 font-bold hover:underline">Lees meer</a>
+                        </div>
+                    </div>
+                    <!-- Artikel 3 -->
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <img src="https://placehold.co/600x400/ca8a04/FFFFFF?text=Vooruitblik" alt="Vooruitblik op de volgende ronde" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <p class="text-sm text-gray-500 mb-2">6 Augustus 2025</p>
+                            <h3 class="text-xl font-bold mb-2">Vooruitblik: De krakers van speelronde 4</h3>
+                            <p class="text-gray-700 mb-4">De volgende ronde belooft een ware uitdaging te worden voor alle voorspellers...</p>
+                            <a href="#" class="text-green-600 font-bold hover:underline">Lees meer</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sectie 5: Contact -->
+        <section id="contact" class="bg-white py-20 md:py-28">
+            <div class="container mx-auto px-6">
+                <div class="bg-gray-800 text-white rounded-lg shadow-2xl p-8 md:p-16 max-w-4xl mx-auto">
+                    <div class="text-center">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-4">Vragen of opmerkingen?</h2>
+                        <p class="text-lg text-gray-300 mb-8">We horen graag van je. Stuur ons een bericht en we nemen zo snel mogelijk contact op.</p>
+                    </div>
+                    <form action="#" method="POST">
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label for="name" class="block mb-2 font-medium">Naam</label>
+                                <input type="text" id="name" name="name" class="w-full text-gray-900 bg-gray-200 border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                            </div>
+                            <div>
+                                <label for="email" class="block mb-2 font-medium">E-mailadres</label>
+                                <input type="email" id="email" name="email" class="w-full text-gray-900 bg-gray-200 border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <label for="message" class="block mb-2 font-medium">Bericht</label>
+                            <textarea id="message" name="message" rows="5" class="w-full text-gray-900 bg-gray-200 border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-green-500" required></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-12 rounded-lg transition-all text-lg">
+                                Verstuur Bericht
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto px-6 text-center text-gray-400">
+            <p>&copy; 2025 Voetbalshot. Alle rechten voorbehouden.</p>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- MOBILE MENU LOGIC ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    });
+    </script>
+</body>
+</html>
